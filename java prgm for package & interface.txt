@@ -1,0 +1,82 @@
+package P1;
+
+public interface Shop
+{
+ public void getdata();
+ public void display();
+ public int total();
+ 
+}
+
+
+
+package P2;
+
+import P1.Shop;
+import java.util.*;
+
+public class Customer implements Shop {
+
+    int banana, apple, grapes, papaya, mango;
+    Scanner s = new Scanner(System.in);
+
+    public void display() {
+        System.out.println("\n Final Order of Customer:");
+        System.out.println("\n\tItem    Quantity   Amount");
+        System.out.println("\n\tBananas :" + banana + " kg" + "    Rs " + (banana * 50));
+        System.out.println("\tApple   :" + apple + " kg" + "    Rs " + (apple * 200));
+        System.out.println("\tGrapes  :" + grapes + " kg" + "    Rs " + (grapes * 100));
+      
+
+    }
+
+    public void getdata() {
+
+        System.out.println("\n\n Details for Customer:");
+        System.out.println("\n\t Enter the number of bananas(in kg): ");
+        banana = s.nextInt();
+        System.out.println("\n\t Enter the number of apple(in kg): ");
+        apple = s.nextInt();
+        System.out.println("\n\t Enter the number of grapes(in kg): ");
+        grapes = s.nextInt();
+        
+
+    }
+
+    public int total() {
+        int total;
+
+        //System.out.println("\nThe total bill of the customer 2:");
+        total = (banana * 50) + (apple * 200) + (grapes * 100) + (papaya * 60) + (mango * 120);
+        System.out.println("\n Total bill of customer:Rs " + total);
+
+        return total;
+    }
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Customer obj1 = new Customer();
+        Customer obj2 = new Customer();
+        int price1, price2;
+        obj1.getdata();
+        obj1.display();
+        price1 = obj1.total();
+        obj2.getdata();
+        obj2.display();
+        price2 = obj2.total();
+
+        if (price1 > price2) {
+            System.out.println("\n\n\t Congragulation!!!!! Customer 1 own a gift hamper.");
+            System.out.println("\n\t The bill of customer 1 is more. Bill amount:Rs " + price1);
+        } else if (price1 < price2) {
+            System.out.println("\n\n\t Congragulation!!!!! Customer 2 own a gift hamper.");
+            System.out.println("\n\t The bill of customer 2 is more. Bill amount:Rs " + price2);
+        } else {
+            System.out.println("\n\t Both bills are equal:Rs " + price1);
+        }
+
+        System.out.println("\n\n\t\t\t Thank You!!!!!!!");
+
+    }
+
+}

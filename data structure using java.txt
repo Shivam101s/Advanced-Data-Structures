@@ -1,0 +1,176 @@
+import java.util.*;
+
+public class DSJava
+{
+ public static void main(String[] args) throws Exception
+ {
+  Scanner sc=new Scanner(System.in);
+  int choice;
+
+  PriorityQueue<Integer> q1=new PriorityQueue<>();
+  Stack<Integer> s1=new Stack<>();
+  LinkedList<Integer> l1=new LinkedList<>();
+  ArrayList<Integer> arrayList=new ArrayList<>();
+  HashMap<Integer, Integer> hs=new HashMap<>();
+ 
+  do
+  {
+   System.out.println("\n====MENU====\n1.Queue\n2.Stack\n3.Linked List\n4.ArraList\n5.Map\n6.Exit\nENter your choice:");
+   choice=sc.nextInt();
+   switch(choice)
+   {
+   case 1:
+    do
+    {
+     System.out.println("\n====Queue=======\n");
+     System.out.println("1. Enqueue\n2.Dequeue\n3.Size\n4.Search\n0.Exit");
+     choice=sc.nextInt();
+     switch(choice)
+     {
+     case 1:
+      System.out.println("\nEnter Number: ");
+      q1.add(new Integer(sc.nextInt()));
+      System.out.println("Added :"+q1.peek());
+      break;
+     case 2:
+      System.out.println("\nRemoved element:=>"+q1.remove());
+      break;
+     case 3:
+      System.out.println("\nSize= "+q1.size());
+      break;
+     case 4:
+      System.out.println("\nENter Element to Search: ");
+      if(q1.contains(sc.nextInt()))
+      {
+       System.out.println("\nElement is present.");
+      }
+      else
+      {
+       System.out.println("\nElement is absent.");
+      }
+      break;
+     case 0:
+      break;
+     }
+    }
+    while(choice!=0);
+    break;
+   case 2:
+    do
+    {
+     System.out.println("\n=======Stack=======");
+     System.out.println("\n1.Push\n2.Pop\n3.Top\n0.Exit;");
+     choice=sc.nextInt();
+     switch(choice)
+     {
+     case 1:
+      System.out.println("\nENter Number: ");
+      s1.push(new Integer(sc.nextInt()));
+      break;
+     case 2:
+      System.out.println("\nPopped elemet:=> "+s1.pop());
+      break;
+     case 3:
+      System.out.println("\nStack top: "+s1.peek());
+      break;
+     case 0:
+         break;
+     }
+    }
+    while(choice!=0);
+    break;
+   case 3:
+    do
+    {
+     System.out.println("\n====Linked LIST=====\n1.ADD Element\n2.Remove Element\n3.First Element\n4.Last Element\n0.Exit");
+     choice=sc.nextInt();
+     switch(choice)
+     {
+     case 1:
+      System.out.println("\nENter Number: ");
+      l1.add(new Integer(sc.nextInt()));
+      break;
+     case 2:
+      System.out.println("\nEnter element to remove: ");
+
+      System.out.println("\nRemoved element:"+l1.remove(sc.nextInt()));
+      break;
+     case 3:
+      System.out.println("\nFirst Element: "+l1.getFirst());
+      break;
+     case 4:
+      System.out.println("\nLast Element: "+l1.getLast());
+      break;
+      case 0:
+         break;
+     }
+    }while(choice!=0);
+    break;
+   case 4:
+    do
+    {
+     System.out.println("\n====ARRAY LIST ========");
+     System.out.println("\n1.Add element\n2.Remove element\n3.Remove element by index\n4.Size\n0.Exit");
+     choice=sc.nextInt();
+     switch(choice)
+     {
+     case 1:
+      System.out.println("\nEnter Element: ");
+      arrayList.add(new Integer(sc.nextInt()));
+      break;
+     case 2:
+      System.out.println("\nEnter element to remove: ");
+      arrayList.remove(new Integer(sc.nextInt()));
+      System.out.println("\nElement Removed.");
+      break;
+     case 3:
+      System.out.println("\nEnter Index to remove element");
+      int index=sc.nextInt();
+      System.out.println("Removed element  at index 0 from arrayList: "+arrayList.remove(index));
+      break;
+     case 4:
+      System.out.println("\nSize:=> "+arrayList.size());
+      break;
+     case 0:
+         break;
+     }
+    }while(choice!=0);
+    break;
+
+   case 5:
+    do
+    {
+     System.out.println("\n===== Hash Map=====");
+     System.out.println("\n1.Insert\n2.Remove by Key\n3.Size\n0.Exit\nEnter Choice:");
+     choice=sc.nextInt();
+
+     switch(choice)
+     {
+     case 1:
+      System.out.println("\nENter Key");
+      int key=sc.nextInt();
+      System.out.println("\nENter Value: ");
+      int value=sc.nextInt();
+      hs.put(key, value);
+      System.out.println("\nRecord Inserted");
+      break;
+     case 2:
+      System.out.println("\nENter Key to delete associated value:");
+      //sc.next();
+      int key1=sc.nextInt();
+      System.out.println("\nRemoved element (roll):"+hs.remove(key1));
+      break;
+     case 3:
+      System.out.println("\nSize: "+hs.size());
+      break;
+     case 0:
+      break;
+     }
+    }while(choice!=0);
+    break;
+   default:
+    System.out.println("\nWrong Choice");
+   }
+  }while(choice!=6);
+ }
+}

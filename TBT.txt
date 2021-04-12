@@ -1,0 +1,217 @@
+#include<stdlib.h>
+#include <iostream>
+using namespace std;
+
+class NODE
+{
+            int data,lb,rb;
+            NODE *left,*right;
+            friend class TBT;
+};
+class TBT
+{
+            int a[10];
+public:
+            NODE *root,*nw,*temp,*head;
+            TBT()
+            {
+                        root=NULL;
+                        head=NULL;
+                        nw=NULL;
+                        temp=NULL;
+            }
+            void create();
+            void create(NODE *);
+            void inorder();
+            void preorder();
+            void postorder();
+            void inorder(NODE *);
+            void preorder(NODE *);
+            void postorder(NODE *);
+};
+
+void TBT::inorder()
+{
+            cout<<"\n Inorder Traversal: ";
+            inorder(head);
+}
+void TBT::preorder()
+            {
+            cout<<"\n Preorder Traversal: ";
+            preorder(head);
+            }
+void TBT::postorder()
+            {
+            cout<<"\n Postorder Traversal: ";
+            postorder(head);
+            }
+void TBT:: create()
+{
+            head=new(NODE);
+            head->left=head;
+            head->right=head;
+            head->data=999;
+            head->lb=1; ;// 1 for link and 0 for thread
+            head->rb=1;
+            create(head);
+
+}
+void TBT::create(NODE *head)
+{
+            root=new(NODE);
+            cout<<"\nEnter root data:";
+            cin>>root->data;
+            head->left=root;
+            head->lb=1;// 1 for link and 0 for thread
+            root->left=head;
+            root->right=head;
+            root->lb=0;
+            root->rb=0;
+            char ch,ch1;
+            do
+            {
+                        nw=new(NODE);
+                        cout<<"Enter new data:";
+                        cin>>nw->data;
+                        nw->lb=0;
+                        nw->rb=0;
+                        temp=root;
+                        while(1)
+                        {
+                                    cout<<"\nDo you want to insert to the left/right of "<<temp->data<<"?l/r:";
+                                    cin>>ch;
+                                    if(ch=='l'||ch=='L')
+                                    {
+                                                if(temp->lb==1)
+                                                {
+                                                            temp=temp->left;
+                                                }
+                                                else
+                                                {
+                                                            nw->left=temp->left;
+                                                            temp->left=nw;
+                                                            nw->right=temp;
+                                                            temp->lb=1;
+                                                            break;
+                                                }
+                                    }
+                                    else
+                                    {
+                                                if(temp->rb==1)
+                                                {
+                                                            temp=temp->right;
+                                                }
+                                                else
+                                                {
+                                                            nw->right=temp->right;
+                                                            temp->right=nw;
+                                                            nw->left=temp;
+                                                            temp->rb=1;
+                                                            break;
+                                                }
+                                    }
+                        }
+                        cout<<"Do you want to continue?";
+                        cin>>ch1;
+            }while(ch1=='y'||ch1=='Y');
+}
+
+
+void TBT::inorder(NODE *head)
+{
+            temp=head->left;
+            while(temp!=head)
+            {
+                        while(temp->lb!=0)
+                                    temp=temp->left;//move upto left most node
+                        while(temp->rb!=1)
+                        {
+                                    cout<<temp->data<<"\t";
+                                    temp=temp->right;
+                        }
+                        if(temp==head)
+                                    break;
+                        cout<<temp->data<<"\t";
+                        temp=temp->right;
+            }
+}
+
+void TBT::preorder(NODE *head)
+{
+            temp=head->left;
+            while(temp!=head)
+            {
+                        while(1)
+                        {
+                                    cout<<temp->data<<"\t";
+                                    if(temp->lb==0)
+                                                break;
+                                    else
+                                                temp=temp->left;
+                        }
+                        while(temp->rb!=1)
+                        {
+                                    temp=temp->right;
+                        }
+                        temp=temp->right;
+            }
+}
+
+void TBT::postorder(NODE *head)
+{
+            int i=-1;
+            temp=head->left;
+            while(1)
+            {
+                        while(1)
+                        {
+                                    i++;
+                                    a[i]=temp->data;
+                                    if(temp->rb==0)
+                                                break;
+                                    temp=temp->right;
+                        }
+                        while(temp->lb!=1)
+                                    temp=temp->left;
+                        if(temp==head)
+                                    break;
+                        temp=temp->left;
+            }
+            while(i!=-1)
+            {
+                        cout<<a[i]<<"\t";
+                        i--;
+            }
+}
+int main()
+{
+            int sw;
+
+            TBT a;
+            do
+            {
+                        cout<<"\n **Menu**\n1.Create root\n2.Inorder\n3.Preorder\n4.Postorder\n5.Exit\nEnter Choice:";
+                        cin>>sw;
+                        switch(sw)
+                        {
+                        case 1:
+                                    a.create();
+                                    break;
+                        case 2:
+                                    a.inorder();
+                                    break;
+                        case 3:
+                                    a.preorder();
+                                    break;
+                        case 4:
+                                    a.postorder();
+                                    break;
+                        case 5:
+                                    exit(0);
+                                    break;
+                        default:
+                                    cout<<"\nEnter correct choice";
+                                    break;
+                        }
+            }while(sw<5);
+}

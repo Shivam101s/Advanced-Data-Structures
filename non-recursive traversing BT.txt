@@ -1,0 +1,207 @@
+#include<iostream>
+#include<stdio.h>
+#include<queue>
+#include<stack>
+using namespace std;
+
+class Node
+{
+            char data[10];
+            Node *left;
+            Node * right;
+            friend class Tree;
+};
+class Tree
+{
+public:
+            Node *temp,*root;
+            Tree();
+            void create();
+            void insert(Node *root,Node *New);
+            void levelwise_traversal();
+            void nr_postorder();
+            void nr_postorder(Node *root);
+            void nr_preorder();
+            void nr_preorder(Node *root);
+            void nr_inorder();
+            void nr_inorder(Node *root);
+};
+Tree::Tree()
+{
+            temp=NULL;
+            root=NULL;
+}
+void Tree::create()
+{
+            temp=new Node;
+            temp->left=temp->right=NULL;
+            cout<<"\nEnter the Data: ";
+            cin>>temp->data;
+            if(root==NULL)
+            {
+                        root=temp;
+            }
+            else
+            {
+                        insert(root,temp);
+            }
+}
+void Tree::insert(Node *root,Node *temp)
+{
+            char ans;
+            cout<<"Where to insert "<<temp->data<<" at Left(L) OR Right(R) "<<root->data<<"? ";
+            cin>>ans;
+            if(ans=='L'||ans=='l')
+            {
+                        if(root->left==NULL)
+                                    root->left=temp;
+                        else
+                                    insert(root->left,temp);
+            }
+            else
+            {
+                        if(root->right==NULL)
+                                    root->right=temp;
+                        else
+                                    insert(root->right,temp);
+            }
+}
+void Tree::nr_postorder()
+{
+            nr_postorder(root);
+}
+
+void Tree::nr_postorder(Node *root)
+{
+            if(!root)
+            {
+                        cout<<"\nTree empty";
+                        return;
+            }
+            stack<Node *> s;
+            stack<Node *> op;
+            s.push(root);
+            while(!s.empty())
+            {
+                        Node *curr=s.top();
+                        op.push(curr);
+                        s.pop();
+                        if(curr->left)
+                                    s.push(curr->left);
+                        if(curr->right)
+                                    s.push(curr->right);
+            }
+            while(!op.empty())
+            {
+                        cout<<op.top()->data<<"\t";
+                        op.pop();
+            }
+}
+
+void Tree::nr_preorder()
+{
+            nr_preorder(root);
+}
+
+void Tree::nr_preorder(Node *root)
+{
+
+            if(!root)
+            {
+                        cout<<"\nTree empty";
+                        return;
+            }
+            stack<Node*> s;
+            s.push(root);
+            while (!s.empty())
+            {
+                        Node *curr = s.top();
+                        s.pop();
+                        cout << curr->data << " ";
+                        if (curr->right)
+                                    s.push(curr->right);
+                        if (curr->left)
+                                    s.push(curr->left);
+
+            }
+}
+void Tree::nr_inorder()
+{
+            nr_inorder(root);
+}
+
+void Tree::nr_inorder(Node *root)
+{
+
+            stack<Node*> s;
+            Node *curr = root;
+            while (!s.empty() || curr != NULL)
+            {
+                        if (curr != NULL)
+                        {
+                                    s.push(curr);
+                                    curr = curr->left;
+                        }
+                        else
+                        {
+                                    curr = s.top();
+                                    s.pop();
+                                    cout << curr->data << " ";
+                                    curr = curr->right;
+                        }
+            }
+}
+
+void Tree :: levelwise_traversal()
+{
+            queue<Node *> q;
+            if(root==NULL)
+            {
+                        cout<<"NULL Tree";
+                        return;
+            }
+            q.push(root);
+            while(!q.empty())
+            {
+                        Node *temp = q.front();
+                        q.pop();
+                        cout <<temp->data<<"\t" ;
+                        if(temp->left){  q.push(temp->left); }
+                        if(temp->right){  q.push(temp-> right); }
+            }
+}
+int main()
+{
+            Tree tr;
+            int ch;
+            do
+            {
+                        cout<<"\n1. Create \n2. Display levelwise\n3. Inorder \n4. Preorder \n5. Postorder \n6. Exit";
+                        cout<<"\nEnter your choice";
+                        cin>> ch;
+                        switch(ch)
+                        {
+                        case 1:
+                                    tr.create();
+                                    break;
+                        case 2:
+                                    cout<<"\nLevel wise Tree is:";
+                                    tr.levelwise_traversal();
+                                    break;
+                        case 3:
+                                    cout<<"\nIn-order traversal is:";
+                                    tr.nr_inorder();
+                                    break;
+                        case 4:
+                                    cout<<"\nPre-order traversal is:";
+                                    tr.nr_preorder();
+                                    break;
+                        case 5:
+                                    cout<<"\nPost-order traversal is:";
+                                    tr.nr_postorder();
+                                    break;
+                        case 6:
+                                    break;
+                        }
+            }while(1);
+}

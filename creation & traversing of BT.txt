@@ -1,0 +1,118 @@
+#include<iostream>
+
+#include<stdio.h>
+#include<queue>
+using namespace std;
+
+class Node
+{
+            char data[10];
+            Node *left;
+            Node * right;
+            friend class Tree;
+};
+
+class Tree
+{
+public:
+            Node *temp,*root;
+            Tree();
+            void create();
+            void insert(Node *root,Node *New);
+            void display();
+};
+
+Tree::Tree()
+{
+            temp=NULL;
+            root=NULL;
+}
+
+void Tree::create()
+{
+
+            temp=new Node;
+            temp->left=temp->right=NULL;
+            cout<<"\nEnter the Data: ";
+            cin>>temp->data;
+            if(root==NULL)
+            {
+                        root=temp;
+            }
+
+            else
+            {
+                        insert(root,temp);
+            }
+}
+
+void Tree::insert(Node *root,Node *temp)
+
+{
+            char ans;
+            cout<<"Where to insert "<<temp->data<<" at Left(L) OR Right(R) "<<root->data<<"? ";
+            cin>>ans;
+            if(ans=='L'||ans=='l')
+            {
+                        if(root->left==NULL)
+                                    root->left=temp;
+                        else
+                                    insert(root->left,temp);
+            }
+            else
+            {
+                        if(root->right==NULL)
+                                    root->right=temp;
+                        else
+                                    insert(root->right,temp);
+            }
+}
+
+void Tree :: display()
+{
+            queue<Node *> q;
+            if(root==NULL)
+            {
+                        cout<<"NULL Tree";
+                        return;
+            }
+
+            q.push(root);
+            while(!q.empty())
+            {
+
+                        Node *temp = q.front();
+                        q.pop();
+                        cout <<temp->data<<"\t" ;
+                        if(temp->left){  q.push(temp->left); }
+                        if(temp->right){  q.push(temp-> right); }
+            }
+
+}
+
+int main()
+{
+            Tree tr;
+            int ch;
+            do
+            {
+
+                        cout<<"\n1. Create \n2. Display\n3. Exit";
+                        cout<<"\nEnter your choice";
+                        cin>> ch;
+                        switch(ch)
+                        {
+                        case 1:
+                                    tr.create();
+                                    break;
+                        case 2:
+                                    cout<<"\nLevel wise Tree is:";
+                                    tr.display();
+                                    break;
+                        case 3:
+                                    break;
+                        }
+
+            }while(1);
+
+}

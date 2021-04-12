@@ -1,0 +1,81 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+#define initial 1
+#define waiting 2
+#define visited 3
+#define MAX 100
+
+int state[MAX];
+int n;
+int G[10][10];
+
+void BF_Traversal();
+void BFS(int v);
+
+int main()
+{
+      int i,j;
+
+      cout<<"Enter number of vertices:";
+      cin>>n;
+
+      //read the adjacency matrix
+      cout<<"\nEnter adjacency matrix of the graph:";
+      for(i=0;i<n;i++)
+            for(j=0;j<n;j++)
+                  cin>>G[i][j];
+
+      //display the adjacency matrix
+      cout<<"\n **Adjacency matrix**\n";
+      for(i=0;i<n;i++)
+      {
+            for(j=0;j<n;j++)
+                  cout<<G[i][j];
+            cout<<"\n";
+      }
+      BF_Traversal();
+      return 0;
+
+}
+
+void BF_Traversal()
+{
+      int v;
+
+      for(v=0; v<n; v++)
+            state[v] = initial;
+
+      cout<<"Enter Start Vertex for BFS: \n";
+      cin>>v;
+      BFS(v);
+}
+
+void BFS(int v)
+{
+      int i;
+      queue<int> q;
+
+      q.push(v);
+      state[v] = waiting;
+
+      while(!q.empty())
+      {
+            int v = q.front();
+            q.pop();
+            cout <<v<<"\t" ;
+            state[v] = visited;
+
+            for(i=0; i<n; i++)
+            {
+                  if(G[v][i] == 1 && state[i] == initial)
+                  {
+                        q.push(i);
+                        state[i] = waiting;
+                  }
+            }
+      }
+      cout<<"\n";
+}
+
